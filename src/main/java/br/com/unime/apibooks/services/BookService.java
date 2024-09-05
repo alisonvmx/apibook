@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -18,12 +19,14 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Book> getAll() {
+    public List<BookRequest> getAll() {
         List<Book> books = bookRepository.findAll();
         if(books.isEmpty()){
             throw new TableEmptyException("No data registered");
         }
-        return books;
+        return books.stream()
+                .map(order-> new ModelMapper().map(order, BookRequest.class))
+                .collect(Collectors.toList());
     }
 
     public BookRequest getOne(Long id){

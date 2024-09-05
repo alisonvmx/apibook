@@ -21,8 +21,8 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<Book>> getAllUsers() throws TableEmptyException {
-        List<Book> books = bookService.getAll();
+    public ResponseEntity<List<BookRequest>> getAllUsers() throws TableEmptyException {
+        List<BookRequest> books = bookService.getAll();
         return ResponseEntity.ok(books);
     }
 
